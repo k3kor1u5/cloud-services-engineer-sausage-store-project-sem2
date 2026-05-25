@@ -1,0 +1,43 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: mongodb-init-reports
+  annotations:
+    helm.sh/hook: post-install
+    helm.sh/hook-weight: "5"
+spec:
+  template:
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: mongo-client
+          image: mongo:7.0
+          command:
+            - sh
+            - -c
+            - |
+              mongosh --host mongodb -u $MONGO_INITDB_ROOT_USERNAME -p $MONGO_INITDB_ROOT_PASSWORD --authenticationDatabase admin <<EOF
+                use $REPORTS_DB;
+                db.createUser({
+                  user: "$REPORTS_USER",
+                  pwd: "$REPORTS_PASSWORD",
+                  roles: [{ role: "readWrite", db: "$REPORTS_DB" }]
+                });
+              EOF
+          env:
+            - name: MONGO_INITDB_ROOT_USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: mongodb-conf
+                  key: MONGO_INITDB_ROOT_USERNAME
+            - name: MONGO_INITDB_ROOT_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: mongodb-conf
+                  key: MONGO_INITDB_ROOT_PASSWORD
+            - name: REPORTS_DB
+              value: {{ .Values.infra.mongodb.reports.database }}
+            - name: REPORTS_USER
+              value: {{ .Values.infra.mongodb.reports.user }}
+            - name: REPORTS_PASSWORD
+              value: {{ .Values.infra.mongodb.reports.password }}
