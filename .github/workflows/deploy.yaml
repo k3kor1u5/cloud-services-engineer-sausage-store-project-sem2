@@ -2,8 +2,7 @@ name: Sausage Store Deploy
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
 
 env:
   DOCKER_HUB_LOGIN: ${{ secrets.DOCKERHUB_USER }}
