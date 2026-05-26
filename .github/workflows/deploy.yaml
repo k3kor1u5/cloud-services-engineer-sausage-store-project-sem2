@@ -5,8 +5,8 @@ on:
     branches: [ main ]
 
 env:
-  DOCKER_HUB_LOGIN: ${{ secrets.DOCKERHUB_USER }}
-  DOCKER_HUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
+  DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
+  DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
   NEXUS_HELM_REPO_USER: ${{ secrets.NEXUS_HELM_REPO_USER }}
   NEXUS_HELM_REPO_PASSWORD: ${{ secrets.NEXUS_HELM_REPO_PASSWORD }}
   NEXUS_HELM_REPO_NAME: sausage-store-helm
