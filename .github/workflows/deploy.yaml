@@ -9,8 +9,7 @@ env:
   DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
   NEXUS_HELM_REPO_USER: ${{ secrets.NEXUS_HELM_REPO_USER }}
   NEXUS_HELM_REPO_PASSWORD: ${{ secrets.NEXUS_HELM_REPO_PASSWORD }}
-  NEXUS_HELM_REPO_NAME: sausage-store-helm
-  NEXUS_HELM_REPO_URL: https://nexus.cloud-services-engineer.education-services.ru/repository/sausage-store-helm
+  NEXUS_HELM_REPO_URL: https://nexus.cloud-services-engineer.education-services.ru/repository/k3kor1u5-sausage-store-helm
   KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
   NAMESPACE: ${{ secrets.NAMESPACE }}
   VAULT_TOKEN: ${{ secrets.VAULT_TOKEN }}
