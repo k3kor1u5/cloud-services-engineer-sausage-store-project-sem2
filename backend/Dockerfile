@@ -6,7 +6,7 @@ ARG VERSION=${VERSION}
 WORKDIR /usr/src/app
 COPY ./src ./src
 COPY *.xml ./
-RUN mvn package -Dversion.application=${VERSION}
+RUN mvn package -DskipTests -Denv.VERSION=${VERSION}
 
 FROM eclipse-temurin:16-jdk-alpine
 ARG VERSION=${VERSION}
