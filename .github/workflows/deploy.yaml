@@ -12,6 +12,7 @@ env:
   NEXUS_HELM_REPO_NAME: sausage-store-helm
   NEXUS_HELM_REPO_URL: https://nexus.cloud-services-engineer.education-services.ru/repository/sausage-store-helm
   KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
+  NAMESPACE: ${{ secrets.NAMESPACE }}
   VAULT_TOKEN: ${{ secrets.VAULT_TOKEN }}
   VAULT_HOST: ${{ secrets.VAULT_HOST }}
 
@@ -119,8 +120,7 @@ jobs:
         - name: Deploy with Helm
           run: |
             helm upgrade --install sausage-store nexus/sausage-store \
-              --namespace sausage-store \
-              --create-namespace \
+              --namespace ${{ env.NAMESPACE }} \
               --set global.vault.host=${{ env.VAULT_HOST }} \
               --set global.vault.vaultToken=${{ env.VAULT_TOKEN }} \
               --set backend.image=${{ env.DOCKERHUB_USER }}/sausage-backend:latest \
