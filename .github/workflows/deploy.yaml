@@ -120,15 +120,5 @@ jobs:
           run: |
             helm upgrade --install sausage-store nexus/sausage-store \
               --namespace ${{ env.NAMESPACE }} \
-              --set global.vault.host=${{ env.VAULT_HOST }} \
-              --set global.vault.vaultToken=${{ env.VAULT_TOKEN }} \
-              --set backend.image=${{ env.DOCKERHUB_USER }}/sausage-backend:latest \
-              --set backend-report.image=${{ env.DOCKERHUB_USER }}/sausage-backend-report:latest \
-              --set frontend.image=${{ env.DOCKERHUB_USER }}/sausage-frontend:latest \
-              --set infra.postgresql.env.POSTGRES_USER=store \
-              --set infra.postgresql.env.POSTGRES_PASSWORD=storepassword \
-              --set infra.postgresql.env.POSTGRES_DB=sausage-store \
-              --set infra.postgresql.image=postgres:13 \
-              --set infra.postgresql.containerPort=5432 \
-              --set infra.postgresql.storage=2Gi \
+              --values ./values-resolved.yaml \
               --kubeconfig ./kubeconfig              
