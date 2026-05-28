@@ -24,7 +24,7 @@ spec:
         ports:
         - containerPort: {{ .Values.mongodb.containerPort }}
         resources:
-          {{ toYaml .Values.mongodb.resources | indent 12 }}
+{{ toYaml .Values.mongodb.resources | nindent 10 }}
         volumeMounts:
         - name: mongodb-data
           mountPath: /data/db
