@@ -36,8 +36,8 @@ spec:
                   name: mongodb-conf
                   key: MONGO_INITDB_ROOT_PASSWORD
             - name: REPORTS_DB
-              value: {{ .Values.infra.mongodb.reports.database }}
+              value: {{ .Values.mongodb.reports.database }}
             - name: REPORTS_USER
-              value: {{ .Values.infra.mongodb.reports.user }}
+              value: {{ .Values.mongodb.reports.user }}
             - name: REPORTS_PASSWORD
-              value: {{ .Values.infra.mongodb.reports.password }}
+              value: {{ .Values.mongodb.reports.password }}

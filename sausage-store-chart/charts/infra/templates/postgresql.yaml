@@ -4,16 +4,16 @@ metadata:
   name: postgresql-secret
 type: Opaque
 stringData:
-  POSTGRES_USER: {{ .Values.infra.postgresql.env.POSTGRES_USER }}
-  POSTGRES_PASSWORD: {{ .Values.infra.postgresql.env.POSTGRES_PASSWORD }}
-  POSTGRES_DB: {{ .Values.infra.postgresql.env.POSTGRES_DB }}
+  POSTGRES_USER: {{ .Values.postgresql.env.POSTGRES_USER }}
+  POSTGRES_PASSWORD: {{ .Values.postgresql.env.POSTGRES_PASSWORD }}
+  POSTGRES_DB: {{ .Values.postgresql.env.POSTGRES_DB }}
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: postgresql-conf
 data:
-  POSTGRES_DB: {{ .Values.infra.postgresql.env.POSTGRES_DB }}
+  POSTGRES_DB: {{ .Values.postgresql.env.POSTGRES_DB }}
 ---
 apiVersion: apps/v1
 kind: StatefulSet
@@ -32,9 +32,9 @@ spec:
     spec:
       containers:
         - name: postgresql
-          image: {{ .Values.infra.postgresql.image }}
+          image: {{ .Values.postgresql.image }}
           ports:
-            - containerPort: {{ .Values.infra.postgresql.containerPort }}
+            - containerPort: {{ .Values.postgresql.containerPort }}
           envFrom:
             - secretRef:
                 name: postgresql-secret
@@ -55,7 +55,7 @@ spec:
         accessModes: [ "ReadWriteOnce" ]
         resources:
           requests:
-            storage: {{ .Values.infra.postgresql.storage }}
+            storage: {{ .Values.postgresql.storage }}
 ---
 apiVersion: v1
 kind: Service
@@ -66,7 +66,7 @@ metadata:
 spec:
   clusterIP: None
   ports:
-    - port: {{ .Values.infra.postgresql.containerPort }}
-      targetPort: {{ .Values.infra.postgresql.containerPort }}
+    - port: {{ .Values.postgresql.containerPort }}
+      targetPort: {{ .Values.postgresql.containerPort }}
   selector:
     app: postgresql

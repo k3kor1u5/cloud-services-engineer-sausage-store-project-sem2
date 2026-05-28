@@ -3,6 +3,12 @@ global:
   vault:
     host: ""
     name: vault-token
+  mongodb:
+    reports:
+      database: sausage-store
+      user: reports
+      password: reportspassword
+    containerPort: 27017
 
 frontend:
   replicas: 1
