@@ -118,6 +118,7 @@ jobs:
             helm repo update
         - name: Deploy with Helm
           run: |
+            envsubst < ./sausage-store-chart/values.yaml > ./values-resolved.yaml
             helm upgrade --install sausage-store nexus/sausage-store \
               --namespace ${{ env.NAMESPACE }} \
               --values ./values-resolved.yaml \
