@@ -25,11 +25,11 @@ frontend:
   image: ${DOCKERHUB_USER}/sausage-frontend:latest
   resources:
     requests:
-      memory: "128Mi"
-      cpu: "100m"
+      memory: "64Mi"
+      cpu: "50m"
     limits:
       memory: "128Mi"
-      cpu: "1"
+      cpu: "200m"
   nginxConf: nginx.conf
 
 backend:
@@ -60,7 +60,7 @@ backend:
       cpu: "100m"
     limits:
       memory: "512Mi"
-      cpu: "1"
+      cpu: "500m"
   containerPort: 8080
   livenessProbe:
     httpGet:
@@ -75,11 +75,11 @@ backend:
       containerPolicies:
         - containerName: backend
           minAllowed:
-            cpu: 100m
-            memory: 256Mi
+            cpu: "100m"
+            memory: "256Mi"
           maxAllowed:
             cpu: 1
-            memory: 512Mi
+            memory: "512Mi"
 
 backend-report:
   replicas: 1
@@ -96,7 +96,7 @@ backend-report:
       cpu: "100m"
     limits:
       memory: "256Mi"
-      cpu: "500m"
+      cpu: "300m"
   hpa:
     enabled: true
     minReplicas: 1
@@ -112,6 +112,13 @@ infra:
       POSTGRES_DB: sausage-store
       POSTGRES_USER: store
       POSTGRES_PASSWORD: storepassword
+    resources:
+      requests:
+        cpu: "200m"
+        memory: "256Mi"
+      limits:
+        cpu: "500m"
+        memory: "512Mi"
   mongodb:
     image: mongo:7.0
     containerPort: 27017
@@ -123,3 +130,10 @@ infra:
       database: sausage-store
       user: reports
       password: reportspassword
+    resources:
+      requests:
+        cpu: "100m"
+        memory: "128Mi"
+      limits:
+        cpu: "200m"
+        memory: "256Mi"
