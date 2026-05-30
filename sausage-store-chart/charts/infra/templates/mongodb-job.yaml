@@ -16,7 +16,21 @@ spec:
             - sh
             - -c
             - |
-              mongosh --host mongodb -u $MONGO_INITDB_ROOT_USERNAME -p $MONGO_INITDB_ROOT_PASSWORD --authenticationDatabase admin <<EOF
+              echo "Waiting for MongoDB to become ready..."
+              until mongosh --host mongodb \
+                -u "$MONGO_INITDB_ROOT_USERNAME" \
+                -p "$MONGO_INITDB_ROOT_PASSWORD" \
+                --authenticationDatabase admin \
+                --eval "db.adminCommand('ping')" \
+                --quiet; do
+                echo "MongoDB not ready, waiting..."
+                sleep 5
+              done
+              echo "MongoDB is ready, creating user..."
+              mongosh --host mongodb \
+                -u "$MONGO_INITDB_ROOT_USERNAME" \
+                -p "$MONGO_INITDB_ROOT_PASSWORD" \
+                --authenticationDatabase admin <<EOF
                 use $REPORTS_DB;
                 db.createUser({
                   user: "$REPORTS_USER",
@@ -24,6 +38,7 @@ spec:
                   roles: [{ role: "readWrite", db: "$REPORTS_DB" }]
                 });
               EOF
+              echo "User created successfully."
           env:
             - name: MONGO_INITDB_ROOT_USERNAME
               valueFrom:
