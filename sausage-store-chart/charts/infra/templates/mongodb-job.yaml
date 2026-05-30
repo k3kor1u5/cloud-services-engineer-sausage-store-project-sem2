@@ -31,7 +31,7 @@ spec:
                 -u "$MONGO_INITDB_ROOT_USERNAME" \
                 -p "$MONGO_INITDB_ROOT_PASSWORD" \
                 --authenticationDatabase admin <<EOF
-                use $REPORTS_DB;
+                use "$REPORTS_DB";
                 db.createUser({
                   user: "$REPORTS_USER",
                   pwd: "$REPORTS_PASSWORD",
