@@ -39,12 +39,12 @@ spec:
                 -u "$MONGO_INITDB_ROOT_USERNAME" \
                 -p "$MONGO_INITDB_ROOT_PASSWORD" \
                 --authenticationDatabase admin <<EOF
-                use "$REPORTS_DB";
-                db.createUser({
-                  user: "$REPORTS_USER",
-                  pwd: "$REPORTS_PASSWORD",
-                  roles: [{ role: "readWrite", db: "$REPORTS_DB" }]
-                });
+              db = db.getSiblingDB("$REPORTS_DB");
+              db.createUser({
+                user: "$REPORTS_USER",
+                pwd: "$REPORTS_PASSWORD",
+                roles: [{ role: "readWrite", db: "$REPORTS_DB" }]
+              });
               EOF
               echo "User created successfully."
           env:
