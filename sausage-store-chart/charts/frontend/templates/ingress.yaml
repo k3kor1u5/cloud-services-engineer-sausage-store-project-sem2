@@ -5,6 +5,10 @@ metadata:
   name: {{ .Release.Name }}-{{ .Chart.Name }}-ingress
 spec:
   ingressClassName: "nginx"
+  tls:
+    - hosts:
+      - {{ .Values.ingress.host }}
+    secretName: 2sem-students-projects-wildcard-secret
   rules:
     - host: {{ .Values.ingress.host }}
       http:
