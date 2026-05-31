@@ -132,8 +132,8 @@ infra:
       password: reportspassword
     resources:
       requests:
-        cpu: "50m"
-        memory: "64Mi"
+        cpu: "200m"
+        memory: "256Mi"
       limits:
         cpu: "200m"
         memory: "256Mi"
