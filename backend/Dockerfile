@@ -1,14 +1,15 @@
 #Это так называемый мультистейдж docker-файл. Сначала делаем образ, который соберёт нам java-приложение,
 #а затем из него берём собранный артефакт и кладём его в новый образ, чтобы оставить в нём меньше лишнего
 
-FROM maven:3.9.16-eclipse-temurin-21-alpine AS builder
+FROM maven:3.9.16-eclipse-temurin-17-slim AS builder
 ARG VERSION=${VERSION}
 WORKDIR /usr/src/app
 COPY ./src ./src
 COPY *.xml ./
-RUN mvn package -DskipTests -Denv.VERSION=${VERSION}
+ENV VERSION=${VERSION}
+RUN mvn package -DskipTests
 
-FROM eclipse-temurin:16-jdk-alpine
+FROM maven:3.9.16-eclipse-temurin-17-slim
 ARG VERSION=${VERSION}
 WORKDIR /app
 RUN addgroup --system jaruser \

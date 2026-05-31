@@ -5,9 +5,6 @@ metadata:
   name: {{ .Release.Name }}-{{ .Chart.Name }}-ingress
 spec:
   ingressClassName: "nginx"
-  tls:
-    - hosts:
-        - {{ .Values.ingress.host }}
   rules:
     - host: {{ .Values.ingress.host }}
       http:
